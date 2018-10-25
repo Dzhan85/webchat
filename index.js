@@ -1,29 +1,25 @@
-var express = require('express');
-var socket = require('socket.io');
+let express = require('express');
+let socket = require('socket.io');
 
 //App setup
 
-var app = express();
+let app = express();
 
-var server = app.listen(4000, function(){
+let server = app.listen(4000, () => {
   console.log('listening to requests on port 4000');
-
 });
 
 //static files
 
 app.use(express.static('public'));
 
-
 //socket setup
 
-var io = socket(server);
+let io = socket(server);
 
-io.on('connection', function(socket){
-
+io.on('connection', (socket) => {
   console.log('made socket connection', socket.id)
-
-  socket.on('chat', function(data){
+  socket.on('chat', (data) => {
     io.sockets.emit('chat', data);
   })
 });
